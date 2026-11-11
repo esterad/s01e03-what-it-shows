@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="../../../_app/immutable/entry/start.VY5is5yU.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/BQfMM7Jv.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/D4FI7HpA.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/BWUdTF5t.js" rel="modulepreload">
+		<link href="../../../_app/immutable/entry/app.obPmX2Pm.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/D37ruAJc.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/t1zubgls.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/C-ggmPc3.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/CWCEDZjb.js" rel="modulepreload">
+		<link href="../../../_app/immutable/nodes/0.BWYBIALx.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/BqcJOarN.js" rel="modulepreload">
+		<link href="../../../_app/immutable/nodes/5.CjXpQ5P0.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/t2l87HrT.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/B7okSU-D.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/SwkR7CaB.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/BypDfxWf.js" rel="modulepreload">
+		<!--e2jw2j--><!----><title>#4471, split: three problems, three tickets · support kb</title>
+		<link href="../../../_app/immutable/assets/runbook.BhhgOc_n.css" rel="stylesheet">
+		<link href="../../../_app/immutable/assets/Callout.yLErXQDM.css" rel="stylesheet">
+		<link href="../../../_app/immutable/assets/CauseTable.DuKfINX_.css" rel="stylesheet">
+		<link href="../../../_app/immutable/assets/5.-T9cBn6y.css" rel="stylesheet">
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents"><!--[--><!--[0--><!--[--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471, split: three problems, three tickets</h1> <p class="meta svelte-e2jw2j"><span>owner <b>esterad</b></span> <span class="status open svelte-e2jw2j">open</span> <span class="svelte-e2jw2j">reviewed 2026-11-11 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><p><a href="/kb/incidents/4471">#4471</a> is marked <strong>known</strong>: one issue, one fix queued. Read what the reports
+show, and where each date came in, and it is three problems. The queued parser fix closes the
+biggest one. The other two stay broken after it ships. Each problem now has its own ticket, with
+the number of reports it covers.</p> <aside class="warn svelte-17bri61"><!---->#4471 is not one bug. Fixing the parser leaves the booking-v3 form and the one-day shift broken.<!----></aside><!----> <h2>What #4471 holds</h2> <p class="sum svelte-1op6c6"><strong>412</strong> reports merged into #4471 (427 export rows, counted once by id) · <strong>3</strong> problems</p> <table><thead><tr><th>problem</th><th>what the reports show</th><th>reports</th><th>tenants</th><th>channels</th><th>ticket</th></tr></thead><tbody><!--[--><tr><td><code>parser</code></td><td>day and month swapped by the shared parser</td><td><strong>374</strong></td><td>11</td><td class="muted svelte-1op6c6">app, email, form</td><td><!--[0--><a href="https://github.com/esterad/s01e03-what-it-shows/issues/1" title="Shared date parser reads day-first dates month first">issue 1</a><!--]--></td></tr><tr><td><code>hint</code></td><td>day and month swapped by the booking-v3 form hint</td><td><strong>33</strong></td><td>3</td><td class="muted svelte-1op6c6">form</td><td><!--[0--><a href="https://github.com/esterad/s01e03-what-it-shows/issues/2" title="booking-v3 form hint says MM/DD/YYYY but the form reads day first">issue 2</a><!--]--></td></tr><tr><td><code>shift</code></td><td>date moves by exactly one day</td><td><strong>5</strong></td><td>5</td><td class="muted svelte-1op6c6">app, email</td><td><!--[0--><a href="https://github.com/esterad/s01e03-what-it-shows/issues/3" title="Booking date moves by exactly one day">issue 3</a><!--]--></td></tr><!--]--></tbody></table><!----> <p>The counts are computed at render time from <code>reports-4471.json</code>, the tenant directory and <code>desk-notes.json</code>. A report that appears twice in the export counts once. Each report is placed by
+what its body shows, its tenant, its channel and its tenant’s booking form. Never by its subject
+line or its intake tag.</p> <h2>The three problems</h2> <p><strong><code>parser</code>: the shared parser reads dates month first (<a href="https://github.com/esterad/s01e03-what-it-shows/issues/1" rel="nofollow">issue 1</a>).</strong> Every tenant on file writes the day first, so a booking for 7 April becomes 4 July. It comes in
+through every channel at every tenant. This is the fix that is already queued.</p> <p><strong><code>hint</code>: the booking-v3 form tells people to type month first (<a href="https://github.com/esterad/s01e03-what-it-shows/issues/2" rel="nofollow">issue 2</a>).</strong> Its date field prints <code>MM/DD/YYYY</code>, then reads the field the tenant’s way, day first. People do
+what the hint says and the booking lands swapped. Only reports sent <strong>through the form</strong> of a <strong>booking-v3</strong> tenant show it. The swap reads the same as the parser’s, but it happens before the
+parser, so the parser fix does not reach it. Fix the hint, or read the field the way the hint asks.</p> <p><strong><code>shift</code>: the date moves by exactly one day (<a href="https://github.com/esterad/s01e03-what-it-shows/issues/3" rel="nofollow">issue 3</a>).</strong> There is no swap: Tuesday becomes Monday, one meeting is held twice for Lisbon and Toronto, an
+invite arrives before its booking. That is a timezone or DST conversion, not the parser. The desk
+had already read these as a one-day move, but the #4471 table still files them under <code>parser</code> by
+tenant, so they had no ticket.</p> <h2>Why the merge hid them</h2> <ul><li><a href="/kb/triage/dedupe">Triage</a> merges on the subject line (<a href="/kb/decisions/0001-dedupe-by-subject">decision 0001</a>).
+All three problems arrive under the same subjects (“Wrong day on the invite”, “Date is wrong”),
+so subject matching cannot tell them apart.</li> <li>Intake tags a report from the reporter’s browser locale. The cause depends on the tenant’s
+locale and booking form, so the tag says <code>hint</code> for parser reports and <code>parser</code> for hint reports.</li> <li>The export repeats some rows across its pages. Count reports by id, not rows.</li></ul> <h2>The table #4471 shows today</h2> <p>For comparison, the incident page’s own table. It finds <code>hint</code> but gives it no ticket, and it
+counts the one-day moves as <code>parser</code>:</p> <p class="sum svelte-12oyimm"><strong>412</strong> reports merged into #4471 · <strong>2</strong> causes</p> <table><thead><tr><th>cause</th><th>reports</th><th>tagged as</th><th>tenants</th><th>seen</th><th></th></tr></thead><tbody><!--[--><tr class="svelte-12oyimm"><td class="svelte-12oyimm"><code>parser</code></td><td class="svelte-12oyimm">379</td><td class="tags svelte-12oyimm">parser ×356 · hint ×23</td><td class="svelte-12oyimm">11</td><td class="svelte-12oyimm">2026-04-01 → 2026-10-04</td><td class="svelte-12oyimm">#4471</td></tr><tr class="svelte-12oyimm wrong"><td class="svelte-12oyimm"><code>hint</code></td><td class="svelte-12oyimm">33</td><td class="tags svelte-12oyimm">hint ×18 · parser ×15</td><td class="svelte-12oyimm">3</td><td class="svelte-12oyimm">2026-04-17 → 2026-09-22</td><td class="svelte-12oyimm">not this ticket — no ticket of its own</td></tr><!--]--></tbody></table> <!--[--><!--[0--><p class="note svelte-12oyimm">5 reports read as a one-day move; filed under <code>parser</code> by tenant.</p><!--]--><!--[-1--><!--]--><!--]--><!----> <!--[0--><p class="stamp svelte-1280m42">desk ref <b class="svelte-1280m42">DR-4RMH-ZYEN</b></p><!--]--><!----><!----></main> <footer class="svelte-e2jw2j">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!--]--><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1244aka = {
+						base: new URL("../../..", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../../../_app/immutable/entry/start.VY5is5yU.js"),
+						import("../../../_app/immutable/entry/app.obPmX2Pm.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+  </body>
+</html>

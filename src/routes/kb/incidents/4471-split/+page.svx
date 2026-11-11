@@ -1,0 +1,76 @@
+---
+layout: runbook
+title: '#4471, split: three problems, three tickets'
+owner: esterad
+status: open
+reviewed: 2026-11-11
+signature: esterad
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const repo = 'https://github.com/esterad/s01e03-what-it-shows/issues';
+  const tickets = {
+    parser: { label: 'issue 1', href: `${repo}/1`, title: 'Shared date parser reads day-first dates month first' },
+    hint: { label: 'issue 2', href: `${repo}/2`, title: 'booking-v3 form hint says MM/DD/YYYY but the form reads day first' },
+    shift: { label: 'issue 3', href: `${repo}/3`, title: 'Booking date moves by exactly one day' },
+  };
+</script>
+
+[#4471](/kb/incidents/4471) is marked **known**: one issue, one fix queued. Read what the reports
+show, and where each date came in, and it is three problems. The queued parser fix closes the
+biggest one. The other two stay broken after it ships. Each problem now has its own ticket, with
+the number of reports it covers.
+
+<Callout kind="warn">
+#4471 is not one bug. Fixing the parser leaves the booking-v3 form and the one-day shift broken.
+</Callout>
+
+## What #4471 holds
+
+<ProblemTable ticket={4471} {tickets} />
+
+The counts are computed at render time from `reports-4471.json`, the tenant directory and
+`desk-notes.json`. A report that appears twice in the export counts once. Each report is placed by
+what its body shows, its tenant, its channel and its tenant's booking form. Never by its subject
+line or its intake tag.
+
+## The three problems
+
+**`parser`: the shared parser reads dates month first ([issue 1](https://github.com/esterad/s01e03-what-it-shows/issues/1)).**
+Every tenant on file writes the day first, so a booking for 7 April becomes 4 July. It comes in
+through every channel at every tenant. This is the fix that is already queued.
+
+**`hint`: the booking-v3 form tells people to type month first ([issue 2](https://github.com/esterad/s01e03-what-it-shows/issues/2)).**
+Its date field prints `MM/DD/YYYY`, then reads the field the tenant's way, day first. People do
+what the hint says and the booking lands swapped. Only reports sent **through the form** of a
+**booking-v3** tenant show it. The swap reads the same as the parser's, but it happens before the
+parser, so the parser fix does not reach it. Fix the hint, or read the field the way the hint asks.
+
+**`shift`: the date moves by exactly one day ([issue 3](https://github.com/esterad/s01e03-what-it-shows/issues/3)).**
+There is no swap: Tuesday becomes Monday, one meeting is held twice for Lisbon and Toronto, an
+invite arrives before its booking. That is a timezone or DST conversion, not the parser. The desk
+had already read these as a one-day move, but the #4471 table still files them under `parser` by
+tenant, so they had no ticket.
+
+## Why the merge hid them
+
+- [Triage](/kb/triage/dedupe) merges on the subject line ([decision 0001](/kb/decisions/0001-dedupe-by-subject)).
+  All three problems arrive under the same subjects ("Wrong day on the invite", "Date is wrong"),
+  so subject matching cannot tell them apart.
+- Intake tags a report from the reporter's browser locale. The cause depends on the tenant's
+  locale and booking form, so the tag says `hint` for parser reports and `parser` for hint reports.
+- The export repeats some rows across its pages. Count reports by id, not rows.
+
+## The table #4471 shows today
+
+For comparison, the incident page's own table. It finds `hint` but gives it no ticket, and it
+counts the one-day moves as `parser`:
+
+<CauseTable ticket={4471} />
+
+<RenderStamp {signature} />
