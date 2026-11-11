@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="../../../_app/immutable/entry/start.BbEvp32b.js" rel="modulepreload">
+    <link href="../../../_app/immutable/entry/start.CbRTxSet.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/BQfMM7Jv.js" rel="modulepreload">
-		<link href="../../../_app/immutable/chunks/D1w7Fb5i.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/B8pOm6r7.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/BWUdTF5t.js" rel="modulepreload">
-		<link href="../../../_app/immutable/entry/app.Br5Z7Xj9.js" rel="modulepreload">
+		<link href="../../../_app/immutable/entry/app.D8xNTR5d.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/D37ruAJc.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/t1zubgls.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/C-ggmPc3.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/CWCEDZjb.js" rel="modulepreload">
 		<link href="../../../_app/immutable/nodes/0.BWYBIALx.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/BqcJOarN.js" rel="modulepreload">
-		<link href="../../../_app/immutable/nodes/5.Cn2o4yAF.js" rel="modulepreload">
-		<link href="../../../_app/immutable/chunks/Ced7Vdgc.js" rel="modulepreload">
+		<link href="../../../_app/immutable/nodes/5.DlCKG879.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/P54lmN-d.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/B7okSU-D.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/CC-eG-Kb.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/0bDZA2LE.js" rel="modulepreload">
@@ -26,13 +26,14 @@
 		<link href="../../../_app/immutable/assets/5.-T9cBn6y.css" rel="stylesheet">
   </head>
   <body data-sveltekit-preload-data="hover">
-    <div style="display: contents"><!--[--><!--[0--><!--[--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471, split: three problems, three tickets</h1> <p class="meta svelte-e2jw2j"><span>owner <b>esterad</b></span> <span class="status open svelte-e2jw2j">open</span> <span class="svelte-e2jw2j">reviewed 2026-11-11 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><p><a href="/kb/incidents/4471">#4471</a> is marked <strong>known</strong>: one issue, one fix queued. Read what the reports
+    <div style="display: contents"><!--[--><!--[0--><!--[--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471, split: three problems, three tickets</h1> <p class="meta svelte-e2jw2j"><span>owner <b>esterad</b></span> <span class="status open svelte-e2jw2j">open</span> <span class="svelte-e2jw2j">reviewed 2026-11-11 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><p><a href="/kb/incidents/4471">#4471</a> was marked <strong>known</strong>: one issue, one fix queued. Read what the reports
 show, and where each date came in, and it is three problems. The queued parser fix closes the
 biggest one. The other two stay broken after it ships. Each problem now has its own ticket, with
 the number of reports it covers.</p> <aside class="warn svelte-17bri61"><!---->#4471 is not one bug. Fixing the parser leaves the booking-v3 form and the one-day shift broken.<!----></aside><!----> <h2>What #4471 holds</h2> <p class="sum svelte-1op6c6"><strong>412</strong> reports merged into #4471 (427 export rows, counted once by id) · <strong>3</strong> problems</p> <table><thead><tr><th>problem</th><th>what the reports show</th><th>reports</th><th>tenants</th><th>ticket</th></tr></thead><tbody><!--[--><tr><td><code>parser</code></td><td>day and month swapped by the shared parser<!--[-1--><!--]--></td><td><strong>379</strong></td><td>11</td><td><!--[0--><a href="https://github.com/esterad/s01e03-what-it-shows/issues/1" title="Shared date parser reads day-first dates month first">issue 1</a><!--]--></td></tr><tr><td><code>hint</code></td><td>day and month swapped by the booking-v3 form hint<!--[-1--><!--]--></td><td><strong>33</strong></td><td>3</td><td><!--[0--><a href="https://github.com/esterad/s01e03-what-it-shows/issues/2" title="booking-v3 form hint says MM/DD/YYYY but the form reads day first">issue 2</a><!--]--></td></tr><tr><td><code>shift</code></td><td>date moves by exactly one day<!--[0--><br/><span class="muted svelte-1op6c6">also counted under <code>parser</code>, where the desk files them</span><!--]--></td><td><strong>5</strong></td><td>5</td><td><!--[0--><a href="https://github.com/esterad/s01e03-what-it-shows/issues/3" title="Booking date moves by exactly one day">issue 3</a><!--]--></td></tr><!--]--></tbody></table><!----> <p>The counts are the desk’s own view, as exported: computed at render time with <code>causes.ts</code> from <code>reports-4471.json</code>, the tenant directory and <code>desk-notes.json</code>. A report that appears twice in the
 export counts once. Each report is placed by its tenant, its channel and its tenant’s booking form,
 never by its subject line or its intake tag. The one-day moves stay counted under <code>parser</code>, where
-the desk files them, and get their own row and ticket because they show a different problem.</p> <h2>The three problems</h2> <p><strong><code>parser</code>: the shared parser reads dates month first (<a href="https://github.com/esterad/s01e03-what-it-shows/issues/1" rel="nofollow">issue 1</a>).</strong> Every tenant on file writes the day first, so a booking for 7 April becomes 4 July. It comes in
+the desk files them, and get their own row and ticket because they show a different problem.</p> <h2>Status after the engineering update</h2> <p>Engineering closed #4471 on 5 October:</p> <table><thead><tr><th>problem</th><th>engineering</th><th>ticket</th></tr></thead><tbody><tr><td><code>parser</code></td><td><strong>fixed</strong>: <code>fix(dates): parse dd/mm for eu locales</code></td><td>issue 1, closed as completed</td></tr><tr><td><code>hint</code></td><td><strong>won’t fix</strong>: the booking-v3 form is retired</td><td>issue 2, closed as not planned</td></tr><tr><td><code>shift</code></td><td>not in the update</td><td>issue 3, <strong>still open</strong></td></tr></tbody></table> <aside class="warn svelte-17bri61"><!---->Closing #4471 does not close the one-day shift. Neither the parser fix nor retiring booking-v3
+touches it. Its reports have no fix yet.<!----></aside><!----> <h2>The three problems</h2> <p><strong><code>parser</code>: the shared parser reads dates month first (<a href="https://github.com/esterad/s01e03-what-it-shows/issues/1" rel="nofollow">issue 1</a>).</strong> Every tenant on file writes the day first, so a booking for 7 April becomes 4 July. It comes in
 through every channel at every tenant. This is the fix that is already queued.</p> <p><strong><code>hint</code>: the booking-v3 form tells people to type month first (<a href="https://github.com/esterad/s01e03-what-it-shows/issues/2" rel="nofollow">issue 2</a>).</strong> Its date field prints <code>MM/DD/YYYY</code>, then reads the field the tenant’s way, day first. People do
 what the hint says and the booking lands swapped. Only reports sent <strong>through the form</strong> of a <strong>booking-v3</strong> tenant show it. The swap reads the same as the parser’s, but it happens before the
 parser, so the parser fix does not reach it. Fix the hint, or read the field the way the hint asks.</p> <p><strong><code>shift</code>: the date moves by exactly one day (<a href="https://github.com/esterad/s01e03-what-it-shows/issues/3" rel="nofollow">issue 3</a>).</strong> There is no swap: Tuesday becomes Monday, one meeting is held twice for Lisbon and Toronto, an
@@ -46,15 +47,15 @@ ticket, and it only footnotes the one-day moves:</p> <p class="sum svelte-12oyim
 			
 			<script>
 				{
-					__sveltekit_1rfpa0h = {
+					__sveltekit_7oqfxb = {
 						base: new URL("../../..", location).pathname.slice(0, -1)
 					};
 
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("../../../_app/immutable/entry/start.BbEvp32b.js"),
-						import("../../../_app/immutable/entry/app.Br5Z7Xj9.js")
+						import("../../../_app/immutable/entry/start.CbRTxSet.js"),
+						import("../../../_app/immutable/entry/app.D8xNTR5d.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 5],
