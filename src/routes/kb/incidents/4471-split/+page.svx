@@ -4,7 +4,7 @@ title: '#4471, split: three problems, three tickets'
 owner: esterad
 status: open
 reviewed: 2026-11-11
-signature: esterad
+signature: v1.eyJzdG9yeSI6Im9mZiIsInN1YiI6IjYxMjAiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5NDM4NzQzNSwiZXhwIjoxNzk0NDczODM1fQ.HLa4mNz9PWrmC22SSMptP51ahEXSv-tl1rUdZrQ0nAI
 ---
 
 <script>

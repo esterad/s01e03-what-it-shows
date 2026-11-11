@@ -37,7 +37,7 @@ Exported 2026-10-04 from the `support` repo, `apps/kb/` → `src/`.
 
 ## S01E03: #4471 split
 
-- New page: `src/routes/kb/incidents/4471-split/+page.svx`, signed `esterad` (desk ref DR-4RMH-ZYEN).
+- New page: `src/routes/kb/incidents/4471-split/+page.svx`, signed with the course ticket as `signature` (desk ref DR-NXCV-XM64).
 - New component: `src/lib/kb/ProblemTable.svelte` computes the counts with the desk's own view as exported (`causes.ts`, `locales.ts`, `desk-notes.json`). No existing file in `src/lib` was changed.
 - The page as the desk sees it: `build/kb/incidents/4471-split/index.html` (whole static build in `build/`; `npm install && npm run build` rebuilds it).
 - Tickets, one per problem in #4471 (412 unique reports):
