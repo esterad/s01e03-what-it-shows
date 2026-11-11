@@ -38,9 +38,9 @@ Exported 2026-10-04 from the `support` repo, `apps/kb/` → `src/`.
 ## S01E03: #4471 split
 
 - New page: `src/routes/kb/incidents/4471-split/+page.svx`, signed `esterad` (desk ref DR-4RMH-ZYEN).
-- New component: `src/lib/kb/ProblemTable.svelte` computes the counts from the exported data with `causes.ts`, `locales.ts` and `desk-notes.json`. No existing file in `src/lib` was changed.
+- New component: `src/lib/kb/ProblemTable.svelte` computes the counts with the desk's own view as exported (`causes.ts`, `locales.ts`, `desk-notes.json`). No existing file in `src/lib` was changed.
 - The page as the desk sees it: `build/kb/incidents/4471-split/index.html` (whole static build in `build/`; `npm install && npm run build` rebuilds it).
 - Tickets, one per problem in #4471 (412 unique reports):
-  - [#1 shared parser swaps day and month — 374 reports](https://github.com/esterad/s01e03-what-it-shows/issues/1)
+  - [#1 shared parser swaps day and month — 379 reports](https://github.com/esterad/s01e03-what-it-shows/issues/1)
   - [#2 booking-v3 form hint MM/DD/YYYY — 33 reports](https://github.com/esterad/s01e03-what-it-shows/issues/2)
   - [#3 date moves by exactly one day — 5 reports](https://github.com/esterad/s01e03-what-it-shows/issues/3)

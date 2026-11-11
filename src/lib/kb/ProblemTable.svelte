@@ -1,63 +1,67 @@
 <script lang="ts">
   import reports from '#lib/data/reports-4471.json';
   import notes from '#lib/data/desk-notes.json';
-  import { causeOf, uniqueById, type Report } from '#lib/kb/causes';
+  import { groupByCause, readAs, uniqueById, type Report } from '#lib/kb/causes';
   import { tenantOf } from '#lib/kb/locales';
 
-  // One row per problem the reports show. A report is placed by what it shows first (the desk's
-  // one-day moves are no swap), then by the path its date took (causes.ts).
-  type Problem = 'parser' | 'hint' | 'shift' | 'unplaced';
+  // One row per problem in the ticket, counted with the desk's own view as exported: the cause
+  // groups of causes.ts, and the reports the desk read as a one-day move (desk-notes.json), which
+  // stay counted where they are filed and also get a row of their own.
+  type Problem = 'parser' | 'hint' | 'unplaced' | 'shift';
   type Ticket = { label: string; href: string; title: string };
 
   let { ticket, tickets }: { ticket: number; tickets: Partial<Record<Problem, Ticket>> } = $props();
 
   const merged = $derived(uniqueById(reports as Report[]).filter((r) => r.mergedInto === ticket));
   const rows = (reports as Report[]).filter((r) => r.mergedInto === ticket).length;
-
-  const problemOf = (r: Report): Problem =>
-    notes.oneDayMove.includes(r.id) ? 'shift' : (causeOf(r, tenantOf(r)) ?? 'unplaced');
+  const groups = $derived(groupByCause(merged, tenantOf));
 
   const WHAT: Record<Problem, string> = {
     parser: 'day and month swapped by the shared parser',
     hint: 'day and month swapped by the booking-v3 form hint',
-    shift: 'date moves by exactly one day',
     unplaced: 'no tenant on file',
+    shift: 'date moves by exactly one day',
   };
 
-  const groups = $derived.by(() => {
-    const by = new Map<Problem, Report[]>();
-    for (const r of merged) by.set(problemOf(r), [...(by.get(problemOf(r)) ?? []), r]);
-    return [...by.entries()]
-      .map(([problem, rs]) => ({
-        problem,
-        count: rs.length,
-        tenants: new Set(rs.map((r) => r.tenant)).size,
-        channels: [...new Set(rs.map((r) => r.channel))].sort().join(', '),
-      }))
-      .sort((a, b) => b.count - a.count);
+  const problems = $derived.by(() => {
+    const out: { problem: Problem; count: number; tenants: number; also?: string }[] = groups.map((g) => ({
+      problem: g.cause,
+      count: g.reports.length,
+      tenants: g.tenants,
+    }));
+    for (const g of groups) {
+      const moved = g.reports.filter((r) => notes.oneDayMove.includes(r.id));
+      if (moved.length)
+        out.push({
+          problem: 'shift',
+          count: readAs(g, notes.oneDayMove),
+          tenants: new Set(moved.map((r) => r.tenant)).size,
+          also: g.cause,
+        });
+    }
+    return out;
   });
 </script>
 
 <p class="sum">
   <strong>{merged.length}</strong> reports merged into #{ticket} ({rows} export rows, counted once by id) ·
-  <strong>{groups.length}</strong> problems
+  <strong>{problems.length}</strong> problems
 </p>
 
 <table>
   <thead>
-    <tr><th>problem</th><th>what the reports show</th><th>reports</th><th>tenants</th><th>channels</th><th>ticket</th></tr>
+    <tr><th>problem</th><th>what the reports show</th><th>reports</th><th>tenants</th><th>ticket</th></tr>
   </thead>
   <tbody>
-    {#each groups as g (g.problem)}
+    {#each problems as p (p.problem)}
       <tr>
-        <td><code>{g.problem}</code></td>
-        <td>{WHAT[g.problem]}</td>
-        <td><strong>{g.count}</strong></td>
-        <td>{g.tenants}</td>
-        <td class="muted">{g.channels}</td>
+        <td><code>{p.problem}</code></td>
+        <td>{WHAT[p.problem]}{#if p.also}<br /><span class="muted">also counted under <code>{p.also}</code>, where the desk files them</span>{/if}</td>
+        <td><strong>{p.count}</strong></td>
+        <td>{p.tenants}</td>
         <td>
-          {#if tickets[g.problem]}
-            <a href={tickets[g.problem]?.href} title={tickets[g.problem]?.title}>{tickets[g.problem]?.label}</a>
+          {#if tickets[p.problem]}
+            <a href={tickets[p.problem]?.href} title={tickets[p.problem]?.title}>{tickets[p.problem]?.label}</a>
           {:else}
             <span class="none">no ticket</span>
           {/if}
